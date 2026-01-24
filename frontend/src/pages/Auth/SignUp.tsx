@@ -32,7 +32,7 @@ export default function SignUp() {
       await axios.post(
         `${API_URL}/api/auth/send-otp`,
         { email },
-        { timeout: 10000 }
+        { timeout: 60000 }
       )
 
       setSuccess("OTP sent successfully! Check your email.")
@@ -97,7 +97,7 @@ export default function SignUp() {
           password,
           confirmPassword,
         },
-        { timeout: 10000 }
+        { timeout: 60000 }
       )
 
       localStorage.setItem("token", response.data.token)
