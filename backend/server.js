@@ -31,23 +31,26 @@ if (!process.env.JWT_SECRET) {
 /* ===========================
    CORS CONFIG (FIXED)
 =========================== */
+// CORS CONFIG — FIXED
 const allowedOrigins = [
   "http://localhost:5173",
-  "http://localhost:3000",
   "https://bioquery-mvp.vercel.app",
-  "https://bioquery-88olns9qo-chiragraikar08-projects.vercel.app",
+  "https://bioquery-mvp.onrender.com",
+  "https://bioquery-94wewgxb2-chiragraikar08s-projects.vercel.app",
+  "https://bioquery-ablpbr1dl-chiragraikar08s-projects.vercel.app",
 ]
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow server-to-server & tools like Postman
+      // allow requests with no origin (Postman, curl)
       if (!origin) return callback(null, true)
 
       if (allowedOrigins.includes(origin)) {
-        callback(null, true)
+        return callback(null, true)
       } else {
-        callback(new Error(`CORS blocked for origin: ${origin}`))
+        console.error("❌ CORS blocked for origin:", origin)
+        return callback(new Error("CORS not allowed"))
       }
     },
     credentials: true,
@@ -56,8 +59,9 @@ app.use(
   })
 )
 
-// Preflight fix
+// IMPORTANT: handle preflight
 app.options("*", cors())
+
 
 /* ===========================
    BODY PARSERS
