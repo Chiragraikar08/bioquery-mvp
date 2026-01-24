@@ -3,6 +3,7 @@ import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
+
 import authRoutes from "./routes/auth.js"
 import adminRoutes from "./routes/admin.js"
 import queryRoutes from "./routes/query.js"
@@ -14,26 +15,59 @@ dotenv.config()
 
 const app = express()
 
+/* ===========================
+   ENV VALIDATION
+=========================== */
 if (!process.env.MONGODB_URI) {
-  console.error("CRITICAL: MONGODB_URI is not set. Please add it to .env file")
+  console.error("CRITICAL: MONGODB_URI is not set")
   process.exit(1)
 }
 
 if (!process.env.JWT_SECRET) {
-  console.error("CRITICAL: JWT_SECRET is not set. Please add it to .env file")
+  console.error("CRITICAL: JWT_SECRET is not set")
   process.exit(1)
 }
 
-// Middleware
+/* ===========================
+   CORS CONFIG (FIXED)
+=========================== */
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://bioquery-mvp.vercel.app",
+  "https://bioquery-88olns9qo-chiragraikar08-projects.vercel.app",
+]
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+      // allow server-to-server & tools like Postman
+      if (!origin) return callback(null, true)
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`))
+      }
+    },
     credentials: true,
-  }),
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 )
+
+// Preflight fix
+app.options("*", cors())
+
+/* ===========================
+   BODY PARSERS
+=========================== */
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+/* ===========================
+   MONGODB CONNECTION
+=========================== */
 let mongoRetries = 0
 const maxRetries = 5
 
@@ -51,21 +85,18 @@ const seedDefaultAdmin = async () => {
         isVerified: true,
       })
       await adminUser.save()
-      console.log("✓ Default admin user created: bioquery@gmail.com")
+      console.log("✓ Default admin user created")
     } else {
       console.log("✓ Admin user already exists")
     }
   } catch (error) {
-    console.error("Error seeding admin user:", error.message)
+    console.error("Admin seed error:", error.message)
   }
 }
 
 const connectMongoDB = () => {
   mongoose
-    .connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
+    .connect(process.env.MONGODB_URI)
     .then(() => {
       console.log("✓ MongoDB connected successfully")
       mongoRetries = 0
@@ -73,14 +104,12 @@ const connectMongoDB = () => {
     })
     .catch((err) => {
       mongoRetries++
-      console.error(`✗ MongoDB connection error (Attempt ${mongoRetries}/${maxRetries}):`, err.message)
+      console.error(`✗ MongoDB error (${mongoRetries}/${maxRetries}):`, err.message)
 
       if (mongoRetries < maxRetries) {
-        const retryDelay = Math.min(1000 * Math.pow(2, mongoRetries), 10000)
-        console.log(`Retrying in ${retryDelay}ms...`)
-        setTimeout(connectMongoDB, retryDelay)
+        setTimeout(connectMongoDB, 2000 * mongoRetries)
       } else {
-        console.error("CRITICAL: Failed to connect to MongoDB after multiple retries")
+        console.error("CRITICAL: MongoDB connection failed")
         process.exit(1)
       }
     })
@@ -88,26 +117,31 @@ const connectMongoDB = () => {
 
 connectMongoDB()
 
-// Routes
+/* ===========================
+   ROUTES
+=========================== */
 app.use("/api/auth", authRoutes)
 app.use("/api/admin", adminRoutes)
 app.use("/api/query", queryRoutes)
 app.use("/api/contact", contactRoutes)
 
 app.get("/api/health", (req, res) => {
-  const mongooseConnected = mongoose.connection.readyState === 1
   res.json({
     status: "ok",
-    mongodb: mongooseConnected ? "connected" : "disconnected",
+    mongodb: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
     timestamp: new Date().toISOString(),
   })
 })
 
-// Error Handler
+/* ===========================
+   ERROR HANDLER
+=========================== */
 app.use(errorHandler)
 
+/* ===========================
+   START SERVER
+=========================== */
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
-  console.log(`Health check available at http://localhost:${PORT}/api/health`)
 })
