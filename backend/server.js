@@ -59,7 +59,7 @@ app.use(
   })
 )
 
-// IMPORTANT: handle preflight
+// IMPORTANT: handle preflights
 app.options("*", cors())
 
 
