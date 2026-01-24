@@ -1,0 +1,14 @@
+.dna-animation-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: linear-gradient(135deg, rgba(8, 17, 31, 0.8) 0%, rgba(20, 25, 50, 0.6) 100%);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

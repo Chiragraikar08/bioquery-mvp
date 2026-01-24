@@ -1,0 +1,33 @@
+import numpy as np
+import pickle
+import keras
+
+def query_genomic_data(user_query, csv_path):
+    """Query genomic data using natural language."""
+    import pandas as pd
+    
+    # Load model and components
+    model = keras.models.load_model('best_genomic_model.keras')
+    with open('model_components.pkl', 'rb') as f:
+        components = pickle.load(f)
+    
+    df = pd.read_csv(csv_path)
+    
+    # Extract sequence name
+    sequence_names = df['sequence_name'].values
+    seq_name = None
+    for sn in sequence_names:
+        if sn.lower() in user_query.lower():
+            seq_name = sn
+            break
+    
+    if seq_name:
+        row = df[df['sequence_name'] == seq_name].iloc[0]
+        print(f"Found: {row['sequence_name']}")
+        print(f"Gene: {row['gene_name']}")
+        print(f"Organism: {row['organism']}")
+        return row.to_dict()
+    return None
+
+# Usage:
+# result = query_genomic_data("find KRAS_exon_2", "genomic_data.csv")
