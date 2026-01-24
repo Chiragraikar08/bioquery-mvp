@@ -17,9 +17,10 @@ export default function SignUp() {
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api"
+  // ✅ FIX: correct env variable (NO localhost fallback)
+  const API_URL = import.meta.env.VITE_API_BASE_URL
 
-  const handleSendOTP = async (e) => {
+  const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
@@ -27,24 +28,32 @@ export default function SignUp() {
 
     try {
       console.log("[v0] Sending OTP to:", email)
-      await axios.post(`${API_URL}/auth/send-otp`, { email }, { timeout: 10000 })
+
+      await axios.post(
+        `${API_URL}/api/auth/send-otp`,
+        { email },
+        { timeout: 10000 }
+      )
+
       setSuccess("OTP sent successfully! Check your email.")
       setTimeout(() => setStep(2), 1000)
-    } catch (err) {
+    } catch (err: any) {
       console.error("[v0] Send OTP error:", err)
       let errorMessage = "Failed to send OTP"
+
       if (err.response?.data?.error) {
         errorMessage = err.response.data.error
       } else if (err.code === "ECONNABORTED") {
         errorMessage = "Connection timeout. Please try again."
       }
+
       setError(errorMessage)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleVerifyOTP = (e) => {
+  const handleVerifyOTP = (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setSuccess("")
@@ -53,11 +62,12 @@ export default function SignUp() {
       setError("Please enter a valid 6-digit OTP")
       return
     }
+
     setSuccess("OTP verified! Continue to set your account details.")
     setTimeout(() => setStep(3), 800)
   }
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError("")
@@ -77,8 +87,9 @@ export default function SignUp() {
 
     try {
       console.log("[v0] Creating account for:", email)
+
       const response = await axios.post(
-        `${API_URL}/auth/signup`,
+        `${API_URL}/api/auth/signup`,
         {
           email,
           otp,
@@ -86,10 +97,9 @@ export default function SignUp() {
           password,
           confirmPassword,
         },
-        { timeout: 10000 },
+        { timeout: 10000 }
       )
 
-      console.log("[v0] Sign up successful")
       localStorage.setItem("token", response.data.token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
 
@@ -103,14 +113,16 @@ export default function SignUp() {
           navigate("/dashboard")
         }
       }, 1000)
-    } catch (err) {
+    } catch (err: any) {
       console.error("[v0] Sign up error:", err)
       let errorMessage = "Sign up failed"
+
       if (err.response?.data?.error) {
         errorMessage = err.response.data.error
       } else if (err.code === "ECONNABORTED") {
         errorMessage = "Connection timeout. Please try again."
       }
+
       setError(errorMessage)
     } finally {
       setLoading(false)
@@ -152,9 +164,6 @@ export default function SignUp() {
               <button type="submit" disabled={loading} className="auth-button">
                 {loading ? "Sending OTP..." : "Send OTP"}
               </button>
-              <p className="auth-link">
-                Already have an account? <a onClick={() => navigate("/signin")}>Sign In</a>
-              </p>
             </form>
           )}
 
@@ -167,17 +176,13 @@ export default function SignUp() {
                   value={otp}
                   onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                   placeholder="000000"
-                  maxLength="6"
-                  inputMode="numeric"
+                  maxLength={6}
                 />
               </div>
               {error && <p className="error-text">{error}</p>}
               {success && <p className="success-text">{success}</p>}
               <button type="submit" className="auth-button">
                 Verify OTP
-              </button>
-              <button type="button" onClick={() => setStep(1)} className="secondary-btn">
-                Back
               </button>
             </form>
           )}
@@ -191,8 +196,6 @@ export default function SignUp() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required
-                  placeholder="+1 (555) 000-0000"
-                  disabled={loading}
                 />
               </div>
               <div className="form-group">
@@ -202,8 +205,6 @@ export default function SignUp() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  placeholder="••••••••"
-                  disabled={loading}
                 />
               </div>
               <div className="form-group">
@@ -213,17 +214,12 @@ export default function SignUp() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  placeholder="••••••••"
-                  disabled={loading}
                 />
               </div>
               {error && <p className="error-text">{error}</p>}
               {success && <p className="success-text">{success}</p>}
               <button type="submit" disabled={loading} className="auth-button">
-                {loading ? "Creating Account..." : "Create Account"}
-              </button>
-              <button type="button" onClick={() => setStep(2)} className="secondary-btn" disabled={loading}>
-                Back
+                Create Account
               </button>
             </form>
           )}
