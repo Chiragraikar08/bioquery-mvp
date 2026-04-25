@@ -1,6 +1,6 @@
 .home-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: transparent;
   overflow-x: hidden;
 }
 
@@ -24,126 +24,138 @@
 }
 
 .hero-title {
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: #00d9ff;
+  font-size: 4.5rem;
+  font-weight: 800;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 30px rgba(0, 217, 255, 0.5);
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.3));
 }
 
 .hero-subtitle {
   font-size: 1.8rem;
-  color: #88d9ff;
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
+  font-weight: 500;
 }
 
 .hero-description {
   font-size: 1.1rem;
-  color: #ccc;
-  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
   line-height: 1.6;
 }
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  background: var(--primary-gradient);
   color: #000;
   padding: 1rem 2.5rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.25);
 }
 
 .primary-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(0, 217, 255, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
 }
 
 .secondary-btn {
-  background: rgba(0, 217, 255, 0.1);
-  color: #00d9ff;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
   padding: 1rem 2.5rem;
-  border: 2px solid rgba(0, 217, 255, 0.3);
-  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
 .secondary-btn:hover {
-  background: rgba(0, 217, 255, 0.2);
-  border-color: #00d9ff;
-  box-shadow: 0 15px 40px rgba(0, 217, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Features Section */
 .features-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+  padding: 8rem 2rem;
+  background: transparent;
+  position: relative;
 }
 
 .section-title {
   text-align: center;
-  font-size: 2.5rem;
-  color: #00d9ff;
-  margin-bottom: 3rem;
-  text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+  font-size: 2.8rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4rem;
 }
 
 .features-grid {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
 }
 
 .feature-card {
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 153, 204, 0.05) 100%);
-  border: 1px solid rgba(0, 217, 255, 0.2);
-  border-radius: 15px;
-  padding: 2rem;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
   text-align: center;
-  transition: all 0.3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .feature-card:hover {
-  border-color: rgba(0, 217, 255, 0.5);
-  box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
-  transform: translateY(-5px);
+  border-color: rgba(0, 210, 255, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 210, 255, 0.1);
+  transform: translateY(-10px);
 }
 
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.3));
 }
 
 .feature-card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .feature-card p {
-  color: #aaa;
-  line-height: 1.6;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
-/* DNA Info Section */
+/* Info Section */
 .info-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  padding: 8rem 2rem;
+  background: transparent;
 }
 
 .info-container {
@@ -156,40 +168,45 @@
 }
 
 .info-text h2 {
-  font-size: 2rem;
-  color: #00d9ff;
+  font-size: 2.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 1.5rem;
 }
 
 .info-text p {
-  color: #ccc;
+  color: var(--text-secondary);
   line-height: 1.8;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
 }
 
 .info-list {
   list-style: none;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .info-list li {
-  color: #aaa;
-  padding: 0.5rem 0;
-  padding-left: 1.5rem;
+  color: var(--text-primary);
+  padding: 0.75rem 0;
+  padding-left: 2rem;
   position: relative;
+  font-weight: 500;
 }
 
 .info-list li:before {
-  content: "▸";
-  color: #00d9ff;
+  content: "✦";
+  color: var(--accent-color);
   position: absolute;
   left: 0;
 }
 
+/* Nucleotide styling kept the same as it's structurally nice, just tweaking colors */
 .dna-structure {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .nucleotide {
@@ -198,32 +215,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
-  font-size: 2rem;
-  font-weight: bold;
+  border-radius: 20px;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #fff;
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
+  backdrop-filter: blur(5px);
 }
 
 .nucleotide.a {
-  background: rgba(255, 0, 0, 0.2);
-  border: 2px solid #ff0000;
+  background: rgba(255, 75, 75, 0.15);
+  border: 1px solid var(--danger-color);
+  box-shadow: 0 0 20px rgba(255, 75, 75, 0.2);
 }
 
 .nucleotide.t {
-  background: rgba(0, 102, 255, 0.2);
-  border: 2px solid #0066ff;
+  background: rgba(0, 210, 255, 0.15);
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
 }
 
 .nucleotide.g {
-  background: rgba(0, 204, 0, 0.2);
-  border: 2px solid #00cc00;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--success-color);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
 }
 
 .nucleotide.c {
-  background: rgba(255, 255, 0, 0.2);
-  border: 2px solid #ffff00;
-  color: #000;
+  background: rgba(255, 204, 0, 0.15);
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
 }
 
 @keyframes float {
@@ -232,14 +254,14 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
   }
 }
 
 /* Genomics Section */
 .genomics-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(10, 14, 39, 0.5) 100%);
+  padding: 8rem 2rem;
+  background: transparent;
 }
 
 .genomics-content {
@@ -247,38 +269,39 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .genomics-card {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid rgba(0, 217, 255, 0.2);
-  border-radius: 15px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
   padding: 2.5rem;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
 .genomics-card:hover {
-  border-color: rgba(0, 217, 255, 0.5);
-  box-shadow: 0 10px 40px rgba(0, 217, 255, 0.15);
+  border-color: rgba(0, 210, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 210, 255, 0.1);
   transform: translateY(-5px);
 }
 
 .genomics-card h3 {
   font-size: 1.5rem;
-  color: #00d9ff;
+  color: var(--accent-color);
   margin-bottom: 1rem;
 }
 
 .genomics-card p {
-  color: #aaa;
-  line-height: 1.6;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
 /* Mission Section */
 .mission-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  padding: 8rem 2rem;
+  background: transparent;
 }
 
 .mission-container {
@@ -286,69 +309,78 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .mission-card {
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 153, 204, 0.05) 100%);
-  border: 1px solid rgba(0, 217, 255, 0.2);
-  border-radius: 15px;
-  padding: 2rem;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .mission-card h3 {
-  font-size: 1.5rem;
-  color: #00d9ff;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.5rem;
 }
 
 .mission-card p {
-  color: #aaa;
+  color: var(--text-secondary);
   line-height: 1.8;
+  font-size: 1.05rem;
 }
 
 /* CTA Section */
 .cta-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(0, 153, 204, 0.05) 100%);
-  border-top: 1px solid rgba(0, 217, 255, 0.2);
-  border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+  padding: 8rem 2rem;
+  background: rgba(0, 210, 255, 0.02);
+  border-top: 1px solid var(--panel-border);
+  border-bottom: 1px solid var(--panel-border);
+  position: relative;
+  overflow: hidden;
 }
 
 .cta-content {
   max-width: 600px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-content h2 {
-  font-size: 2.5rem;
-  color: #00d9ff;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+  font-size: 3rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
 }
 
 .cta-content p {
-  color: #aaa;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
 }
 
 .cta-btn {
-  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  background: var(--primary-gradient);
   color: #000;
-  padding: 1rem 2.5rem;
+  padding: 1.2rem 3rem;
   border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
 }
 
 .cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(0, 217, 255, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 210, 255, 0.5);
 }
 
 /* Responsive */

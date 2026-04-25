@@ -1,6 +1,6 @@
 .dashboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: transparent; /* Rely on App.css global background */
 }
 
 .dashboard-container {
@@ -13,39 +13,43 @@
 /* Sidebar */
 .sidebar {
   width: 280px;
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.8) 0%, rgba(10, 14, 39, 0.8) 100%);
-  border-right: 1px solid rgba(0, 217, 255, 0.2);
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid var(--panel-border);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-header {
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+  border-bottom: 1px solid var(--panel-border);
 }
 
 .sidebar-header h2 {
-  color: #00d9ff;
+  color: var(--accent-color);
   font-size: 1.2rem;
   margin-bottom: 1rem;
 }
 
 .new-chat-btn {
   width: 100%;
-  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  background: var(--primary-gradient);
   color: #000;
   padding: 0.75rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.2);
 }
 
 .new-chat-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.4);
 }
 
 .history-list {
@@ -64,12 +68,12 @@
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 0.5rem;
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid rgba(0, 217, 255, 0.2);
+  background: rgba(0, 210, 255, 0.03);
+  border: 1px solid rgba(0, 210, 255, 0.1);
   border-radius: 8px;
-  color: #aaa;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   text-align: left;
   display: flex;
   align-items: center;
@@ -78,9 +82,10 @@
 }
 
 .history-item:hover {
-  background: rgba(0, 217, 255, 0.1);
-  border-color: rgba(0, 217, 255, 0.4);
-  color: #00d9ff;
+  background: rgba(0, 210, 255, 0.08);
+  border-color: rgba(0, 210, 255, 0.3);
+  color: var(--text-primary);
+  transform: translateX(4px);
 }
 
 .history-icon {
@@ -104,22 +109,25 @@
 
 .chat-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+  border-bottom: 1px solid var(--panel-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.4) 0%, rgba(10, 14, 39, 0.4) 100%);
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
 }
 
 .header-content h1 {
-  color: #00d9ff;
-  font-size: 1.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.6rem;
   margin-bottom: 0.25rem;
 }
 
 .header-content p {
-  color: #aaa;
-  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 .view-toggle {
@@ -128,19 +136,26 @@
 }
 
 .toggle-btn {
-  background: rgba(0, 217, 255, 0.1);
-  border: 1px solid rgba(0, 217, 255, 0.3);
-  color: #00d9ff;
-  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 0.5rem 1.25rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
 }
 
 .toggle-btn.active {
-  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  background: var(--primary-gradient);
   color: #000;
-  border-color: #00d9ff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.3);
 }
 
 /* Chat Container */
@@ -231,23 +246,25 @@
 }
 
 .message-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: rgba(0, 217, 255, 0.2);
-  border: 2px solid rgba(0, 217, 255, 0.4);
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid var(--accent-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #00d9ff;
-  font-weight: bold;
+  color: var(--accent-color);
+  font-weight: 600;
   flex-shrink: 0;
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
 }
 
 .message-avatar.ai {
-  background: rgba(0, 255, 136, 0.2);
-  border-color: rgba(0, 255, 136, 0.4);
-  color: #00ff88;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--success-color);
+  color: var(--success-color);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
 }
 
 .message-content {
@@ -388,50 +405,55 @@ code {
 /* Input Form */
 .input-form {
   padding: 1.5rem 2rem;
-  border-top: 1px solid rgba(0, 217, 255, 0.2);
-  background: linear-gradient(135deg, rgba(26, 31, 58, 0.4) 0%, rgba(10, 14, 39, 0.4) 100%);
+  border-top: 1px solid var(--panel-border);
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
 }
 
 .input-wrapper {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .input-wrapper input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 217, 255, 0.3);
-  color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
   font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .input-wrapper input:focus {
   outline: none;
-  border-color: #00d9ff;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+  border-color: var(--accent-color);
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.15);
 }
 
 .input-wrapper button {
-  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  background: var(--primary-gradient);
   color: #000;
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 2rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.25);
 }
 
 .input-wrapper button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 210, 255, 0.4);
 }
 
 .input-wrapper button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 /* History View */
