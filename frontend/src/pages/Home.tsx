@@ -10,6 +10,16 @@ export default function Home() {
   const navigate = useNavigate()
   const [activeSection, setActiveSection] = useState(0)
 
+  const isLoggedIn = !!localStorage.getItem("token")
+
+  const handleStartExploring = () => {
+    if (isLoggedIn) {
+      navigate("/dashboard")
+    } else {
+      navigate("/signup")
+    }
+  }
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id)
     if (element) {
@@ -43,8 +53,8 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="hero-buttons"
           >
-            <button className="primary-btn" onClick={() => navigate("/signup")}>
-              Start Exploring
+            <button className="primary-btn" onClick={handleStartExploring}>
+              {isLoggedIn ? "Go to Dashboard" : "Start Exploring"}
             </button>
             <button className="secondary-btn" onClick={() => scrollToSection("features")}>
               Learn More
@@ -234,8 +244,8 @@ export default function Home() {
         >
           <h2>Ready to Explore Your Genome?</h2>
           <p>Join thousands of researchers using BioQuery for genomic analysis</p>
-          <button className="cta-btn" onClick={() => navigate("/signup")}>
-            Get Started Now
+          <button className="cta-btn" onClick={handleStartExploring}>
+            {isLoggedIn ? "Go to Dashboard" : "Get Started Now"}
           </button>
         </motion.div>
       </section>
