@@ -39,6 +39,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="hero-text"
           >
+            <div className="hero-badge">✦ New · AI-Powered Genomics Platform</div>
             <h1 className="hero-title">Welcome to BioQuery</h1>
             <p className="hero-subtitle">AI-Powered Genomic Intelligence</p>
             <p className="hero-description">
@@ -54,11 +55,31 @@ export default function Home() {
             className="hero-buttons"
           >
             <button className="primary-btn" onClick={handleStartExploring}>
-              {isLoggedIn ? "Go to Dashboard" : "Start Exploring"}
+              {isLoggedIn ? "Go to Dashboard" : "Start Exploring →"}
             </button>
             <button className="secondary-btn" onClick={() => scrollToSection("features")}>
               Learn More
             </button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="hero-stats"
+          >
+            <div className="hero-stat">
+              <div className="hero-stat-value">10K+</div>
+              <div className="hero-stat-label">Researchers</div>
+            </div>
+            <div className="hero-stat">
+              <div className="hero-stat-value">50M+</div>
+              <div className="hero-stat-label">Sequences Analyzed</div>
+            </div>
+            <div className="hero-stat">
+              <div className="hero-stat-value">99.9%</div>
+              <div className="hero-stat-label">Accuracy</div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -66,6 +87,7 @@ export default function Home() {
       {/* Features Section */}
       <section id="features" className="features-section">
         <h2 className="section-title">Why Choose BioQuery?</h2>
+        <p className="section-subtitle">Everything you need to explore, analyze, and understand genomic data — all in one place.</p>
 
         <div className="features-grid">
           <motion.div
@@ -242,10 +264,10 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="cta-content"
         >
-          <h2>Ready to Explore Your Genome?</h2>
-          <p>Join thousands of researchers using BioQuery for genomic analysis</p>
+          <h2>Ready to Explore <span>Your Genome?</span></h2>
+          <p>Join thousands of researchers and scientists using BioQuery to unlock the secrets of genomic data through AI-powered analysis.</p>
           <button className="cta-btn" onClick={handleStartExploring}>
-            {isLoggedIn ? "Go to Dashboard" : "Get Started Now"}
+            {isLoggedIn ? "Go to Dashboard →" : "Get Started Free →"}
           </button>
         </motion.div>
       </section>
